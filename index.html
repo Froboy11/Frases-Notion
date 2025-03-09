@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Koans</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            background: #f8f6f3;
+        }
+        .koan-container {
+            padding: 2rem;
+            height: 320px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+        .koan-content {
+            max-width: 580px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 3rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            position: relative;
+        }
+        .koan-content::before {
+            content: "⬤";
+            position: absolute;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.4rem;
+            color: #999;
+            opacity: 0.3;
+        }
+        .title {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 0 0 1.8rem 0;
+            color: #2c2c2c;
+            text-align: center;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 1s ease forwards;
+        }
+        .story {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.25rem;
+            line-height: 1.3;
+            color: #3a3a3a;
+            margin: 0;
+            text-align: center;
+            letter-spacing: 0.01em;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .koan-container:hover .koan-content {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+        @media (max-width: 640px) {
+            .koan-container {
+                padding: 1rem;
+                height: 360px;
+            }
+            .koan-content {
+                padding: 2rem;
+            }
+            .title {
+                font-size: 1.3rem;
+            }
+            .story {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="koan-container" onclick="setRandomKoan()" title="Click for another koan">
+        <div class="koan-content">
+            <p class="title" id="title"></p>
+            <p class="story" id="story"></p>
+        </div>
+    </div>
+
+    <script>
+        const koans = [
+            {
+                title: "La muerte feliz - Albert Camus",
+                story: "No se vive feliz más o menos tiempo. Se es feliz y punto. Y la muerte no impide nada; como mucho es un accidente de la felicidad."
+            },
+            {
+                title: "El principito - Antoine de Saint-Exupéry",
+                story: "¿Sabes? Cuando uno está verdaderamente triste le gusta ver las puestas de sol."
+            },
+            {
+                title: "El principito - Antoine de Saint-Exupéry",
+                story: "Nunca hay que hacer caso a las flores, basta con mirarlas y olerlas."
+            },
+            {
+                title: "El principito - Antoine de Saint-Exupéry",
+                story: "Solo con el corazón se puede ver bien; lo esencial es invisible para los ojos."
+            },
+            {
+                title: "La muerte feliz - Albert Camus",
+                story: "Pero a veces hace falta más valor para vivir que para matarse."
+            },
+            {
+                title: "Anónimo",
+                story: "Hay hombres que quieren tener hijos y otros que quieren ser papás."
+            },
+            {
+                title: "The Present Moment",
+                story: "A monk asked, 'What is the most important moment?' The master replied, 'The one you are in.' The monk said, 'How should I stay in it?' The master replied, 'Get out of it.'"
+            }
+        ];
+
+        let currentKoanIndex = -1;
+
+        function setRandomKoan() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * koans.length);
+            } while (newIndex === currentKoanIndex && koans.length > 1);
+            
+            currentKoanIndex = newIndex;
+            const koan = koans[currentKoanIndex];
+            
+            const title = document.querySelector('.title');
+            const story = document.querySelector('.story');
+            
+            title.style.animation = 'none';
+            story.style.animation = 'none';
+            
+            void title.offsetHeight;
+            void story.offsetHeight;
+            
+            title.style.animation = null;
+            story.style.animation = null;
+            
+            title.textContent = koan.title;
+            story.textContent = koan.story;
+        }
+
+        // Set initial koan
+        setRandomKoan();
+    </script>
+</body>
+</html>
